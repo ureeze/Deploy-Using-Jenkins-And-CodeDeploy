@@ -28,7 +28,8 @@ public class PostsRepositoryTest {
     }
 
     @Test
-    public void board_save_fetch() {
+    public void boardSave_load() {
+        //given
         String title = "테스트 게시글";
         String content = "테스트 본문";
 
@@ -38,15 +39,17 @@ public class PostsRepositoryTest {
                 .author("jojoldu@gmail.com")
                 .build());
 
+        //when
         List<Posts> postsList = postsRepository.findAll();
 
+        //then
         Posts posts = postsList.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
     }
 
     @Test
-    public void BaseTimeEntity_등록() {
+    public void BaseTimeEntity_enroll() {
         //given
         LocalDateTime now = LocalDateTime.of(2019, 6, 4, 0, 0, 0);
         postsRepository.save(Posts.builder()
