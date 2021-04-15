@@ -17,8 +17,22 @@ AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 
 ```
 
 ### Installing / 설치
-도커(Docker) : 컨테이너 기반의 오픈소스 가상화 플랫폼  
-도커에서 의미하는 컨테이너 : 
+#### 도커(Docker)  
+컨테이너 기반의 오픈소스 가상화 플랫폼  
+
+#### 도커에서 의미하는 컨테이너  
+프로그램(소프트웨어)을 담는 격리된 공간을 의미. 각 컨테이너는 격리된 공간이기 한 컨테이너에 문제가 생기더라도 컨테이너 간에 영향을 끼치지 않는다.  
+
+#### 도커의 장점  
+빠르고 가벼운 가상화 솔루션 - 호스트의 운영체제를 공유하여 필요한 최소한의 리소스만 할당받아 동작  
+개발언어에 종속되지 않는다.  
+뛰어난 보안성  
+
+#### 도커 설치(로컬환경)
+Windows10 도커설치
+(https://hub.docker.com/editions/community/docker-ce-desktop-windows/)  
+CMD 에서 "docker -v" 로 도커가 설치되었는지 확인.  
+![docker_install](https://user-images.githubusercontent.com/37195463/114914007-cb4e0580-9e5c-11eb-81fe-34990d7a6de6.png)
 
 ```
 예시
