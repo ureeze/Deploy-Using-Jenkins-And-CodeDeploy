@@ -132,8 +132,8 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://gist.github.com/PurpleBooth/LICENSE.md) file for details / 이 프로젝트는 MIT 라이센스로 라이센스가 부여되어 있습니다. 자세한 내용은 LICENSE.md 파일을 참고하세요.
 
-## Acknowledgments / 감사의 말
+## [참고자료]
+<https://goddaehee.tistory.com/252?category=399168>
+<https://jojoldu.tistory.com/441>
+<https://dbjh.tistory.com/71?category=739428>
 
-* Hat tip to anyone whose code was used / 코드를 사용한 모든 사용자들에게 팁
-* Inspiration / 영감
-* etc / 기타
