@@ -84,17 +84,22 @@ Jenkins [host ip:port]로 접속
 ```
 http://localhost:32789/
 ```
+![jenkins pw](https://user-images.githubusercontent.com/37195463/114923021-4caa9580-9e67-11eb-899a-c617425ff848.png)
 
 docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 
     docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
     
-도커 컨테이너 내부로 접속
+>도커 컨테이너 내부로 접속
 
-    docker ps
+    docker ps -a
     docker exec -it 도커컨테이너ID /bin/bash    
     
     ex) docker exec -it 6832359260fd /bin/bash
+
+설치완료
+
+![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
 
 
 ## Running the tests / 테스트의 실행
