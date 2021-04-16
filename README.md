@@ -1,22 +1,29 @@
 # 스프링부트 프로젝트의 CI/CD환경 구축
 
-**[뱃지나 프로젝트에 관한 이미지들이 이 위치에 들어가면 좋습니다]**  
 AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 구축
+![full](https://user-images.githubusercontent.com/37195463/115058438-39a7cc00-9f20-11eb-9ba5-9c9aef736909.png)
 
-## Getting Started / 어떻게 시작하나요?
+## 전체과정
 
-이 곳에서 설치에 관련된 이야기를 해주시면 좋습니다.
+1. Docker 설치
+2. Jenkins 설치
+3. AWS S3 버킷 생성
+4. AWS CodeDeploy 생성
+5. AWS EC2 인스턴스 생성(배포용)
+6. IAM 역할/사용자 생성
+7. Jenkins 작업설정
+8. 프로젝트내부에 deploy.sh , appspce.yml 생성
 
 ### Prerequisites / 선행 조건
 
 아래 사항들이 설치가 되어있어야합니다.
 
 ```
-예시
+Run 가능한 스프링부트 
 ```
 
 ## Installing / 설치
-### 도커(Docker)  
+### 1. 도커(Docker)  
 컨테이너 기반의 오픈소스 가상화 플랫폼  
 
 ### 도커에서 의미하는 컨테이너  
@@ -35,7 +42,7 @@ Windows10 도커설치
 CMD 에서 "docker -v" 로 도커가 설치되었는지 확인.  
 ![docker_install](https://user-images.githubusercontent.com/37195463/114914007-cb4e0580-9e5c-11eb-81fe-34990d7a6de6.png)  
 
-### 젠킨스 설치
+### 2. Jenkins 설치
 root권한으로 진행  
 >root아닌 현재유저를 도커그룹에 추가
 
@@ -100,8 +107,34 @@ docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
 
+### 3. AWS S3 버킷 생성  
+*(액세스 키 ID, 비밀 액세스 키) 기억
 
-## Running the tests / 테스트의 실행
+### 4. AWS EC2 생성  
+
+### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
+
+### 6. IAM 역할/사용자 생성
+IAM 역할 - CodeDeploy, EC2
+IAM 사용자 - Jenkins
+
+### 7. Jenkins 작업설정
+![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)
+```
+플러그인 
+• AWS CodeDeploy Plugin for Jenkins  
+• GitHub Integration Plugin  
+• Gradle Plugin
+```
+![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
+![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
+![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
+![create project 3](https://user-images.githubusercontent.com/37195463/115069211-37e50500-9f2e-11eb-8ee6-f4788dd06cfa.png)
+![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
+![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)
+
+### 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
+### 9. Running the tests / 테스트의 실행
 
 어떻게 테스트가 이 시스템에서 돌아가는지에 대한 설명을 합니다
 
