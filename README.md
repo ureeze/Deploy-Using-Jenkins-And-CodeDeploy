@@ -114,6 +114,10 @@ docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 ### 4. AWS EC2 생성  
 
 ### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
+codeDeploy agent 설치
+```
+
+```
 
 ### 6. IAM 역할/사용자 생성
 IAM 역할 - CodeDeploy, EC2  
