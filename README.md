@@ -132,8 +132,8 @@ IAM 사용자 - Jenkins
 ![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
 ![create project 3](https://user-images.githubusercontent.com/37195463/115069211-37e50500-9f2e-11eb-8ee6-f4788dd06cfa.png)
 ![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
-![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)
-(S3 액세스 키 ID, 비밀 액세스 키 )
+![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)  
+(S3 액세스 키 ID, 비밀 액세스 키  )
 ![create project 6](https://user-images.githubusercontent.com/37195463/115069775-07519b00-9f2f-11eb-8905-0d28d6bbd2b7.png)
 
 Github에 Webhook설정
