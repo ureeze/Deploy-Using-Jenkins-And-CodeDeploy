@@ -172,7 +172,9 @@ install 파일로 설치를 진행합니다.
 * 새 작업 생성  
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
+![jenkins build deploy](https://user-images.githubusercontent.com/37195463/115113368-ea67a700-9fc4-11eb-9902-b79efa569997.png)
 ![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
+![jenkins build deploy](https://user-images.githubusercontent.com/37195463/115113368-ea67a700-9fc4-11eb-9902-b79efa569997.png)
 ![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
 ![create project 3](https://user-images.githubusercontent.com/37195463/115069211-37e50500-9f2e-11eb-8ee6-f4788dd06cfa.png)
 ![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
@@ -183,6 +185,18 @@ install 파일로 설치를 진행합니다.
 Github에 Webhook설정  
 ![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
 
+다음으로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만들겠습니다.
+
+이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행합니다.  
+만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되게 됩니다.
++ 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
+
+![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/115113369-ea67a700-9fc4-11eb-9112-7028a8111af8.png)
+![jenkins remove1](https://user-images.githubusercontent.com/37195463/115113502-ae811180-9fc5-11eb-8842-b2efc483c2bc.png)
+
++ jenkins-build-deploy에 추가 적용  
+  
+![jenkins remove2](https://user-images.githubusercontent.com/37195463/115113501-ade87b00-9fc5-11eb-9993-feba9ad09ea1.png)
 ### 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
 > scripts/docker.sh
 ```
@@ -253,6 +267,18 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
 Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
 신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드합니다.  
 그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포합니다.
+
++ build후 jenkins 결과 
+
+![jenkins build](https://user-images.githubusercontent.com/37195463/115113367-e9cf1080-9fc4-11eb-813d-8babd98c974a.png)
+
++ s3에 file 업로드 됨
+
+![s3 file](https://user-images.githubusercontent.com/37195463/115113366-e9367a00-9fc4-11eb-99b6-1fcc81bc5aa5.png)
+
++ codeDeploy 배포 상태
+
+![codedeploy status](https://user-images.githubusercontent.com/37195463/115113364-e89de380-9fc4-11eb-8728-56f7b457214f.png)
 
 ## [참고자료]
 <https://goddaehee.tistory.com/252?category=399168>  
