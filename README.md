@@ -4,7 +4,7 @@ AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 
 ![full](https://user-images.githubusercontent.com/37195463/115058438-39a7cc00-9f20-11eb-9ba5-9c9aef736909.png)
 
 ## 전체과정
-
+```
 1. Docker 설치
 2. Jenkins 설치
 3. AWS S3 버킷 생성
@@ -14,7 +14,7 @@ AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 
 7. Jenkins 작업설정
 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
 9. Github에 프로젝트 PUSH
-
+```
 ### Prerequisites / 선행 조건
 
 아래 사항들이 설치가 되어있어야합니다.
@@ -25,29 +25,31 @@ Run 가능한 스프링부트
 
 ## Installing / 설치
 ### 1. 도커(Docker)  
-컨테이너 기반의 오픈소스 가상화 플랫폼  
++ 컨테이너 기반의 오픈소스 가상화 플랫폼  
 
 ### 도커에서 의미하는 컨테이너  
-프로그램(소프트웨어)을 담는 격리된 공간을 의미. 각 컨테이너는 격리된 공간이기 한 컨테이너에 문제가 생기더라도 컨테이너 간에 영향을 끼치지 않는다.  
++ 프로그램(소프트웨어)을 담는 격리된 공간을 의미. 각 컨테이너는 격리된 공간이기 한 컨테이너에 문제가 생기더라도 컨테이너 간에 영향을 끼치지 않는다.  
 
 ### 도커의 장점  
-빠르고 가벼운 가상화 솔루션 - 호스트의 운영체제를 공유하여 필요한 최소한의 리소스만 할당받아 동작  
-개발언어에 종속되지 않는다.  
-뛰어난 보안성  
++ 빠르고 가벼운 가상화 솔루션 - 호스트의 운영체제를 공유하여 필요한 최소한의 리소스만 할당받아 동작  
++ 개발언어에 종속되지 않는다.  
++ 뛰어난 보안성  
 
-### 도커 설치(로컬환경)
-Windows10 도커설치
-<https://hub.docker.com/editions/community/docker-ce-desktop-windows/>  
+### 도커 설치 (로컬환경)
++ Windows10 도커설치 (<https://hub.docker.com/editions/community/docker-ce-desktop-windows/>)
+
 ![docker_install01](https://user-images.githubusercontent.com/37195463/114920019-f38d3280-9e63-11eb-8086-86a985b4564a.png)  
 
-CMD 에서 "docker -v" 로 도커가 설치되었는지 확인.  
+
++ CMD 에서 "docker -v" 로 도커가 설치되었는지 확인.  
+
 ![docker_install](https://user-images.githubusercontent.com/37195463/114914007-cb4e0580-9e5c-11eb-81fe-34990d7a6de6.png)  
 
 ### 2. Jenkins 설치
-root권한으로 진행  
->root아닌 현재유저를 도커그룹에 추가
+##### root 권한으로 진행  
+>root가 아닌 현재유저를 도커그룹에 추가
 
-```
+ 
 현재 유저 확인
 
     Echo $USER
@@ -67,36 +69,40 @@ docker 재실행
 그래도 적용이 안된경우 접속해제 후 재연결 
 
     exit
-```
+ 
 
 * 젠킨스 이미지 받기
-
-    sudo docker pull jenkins/jenkins:lts
-    
+```
+sudo docker pull jenkins/jenkins:lts
+``` 
 * docker jenkins image 확인
-
-    docker images
-    
+```
+docker images
+```  
 * docker image를 컨테이너로 등록 후 실행
-
-    docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root jenkins/jenkins:lts
-    
-    -d detached mode 흔히 말하는 백그라운드 모드
-    -p 호스트(앞)와 컨테이너(뒤)의 포트를 연결 (포트포워딩) 로컬 PORT: 컨테이너 PORT
-    -v 호스트(앞)와 컨테이너(뒤)의 디렉토리를 연결 (마운트)
-    -u 실행할 사용자 지정
-    –-name 컨테이너 이름 설정
-
+```
+docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root jenkins/jenkins:lts
+  
+-d detached mode 흔히 말하는 백그라운드 모드
+-p 호스트(앞)와 컨테이너(뒤)의 포트를 연결 (포트포워딩) 로컬 PORT: 컨테이너 PORT
+-v 호스트(앞)와 컨테이너(뒤)의 디렉토리를 연결 (마운트)
+-u 실행할 사용자 지정
+–-name 컨테이너 이름 설정
+```
 * Jenkins [host ip:port]로 접속
 ```
 http://localhost:32789/
 ```
+
+* Administrator password 입력
+
 ![jenkins pw](https://user-images.githubusercontent.com/37195463/114923021-4caa9580-9e67-11eb-899a-c617425ff848.png)
 
 * docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
+```
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
 
-    docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
-    
 >도커 컨테이너 내부로 접속
 
     docker ps -a
@@ -104,7 +110,7 @@ http://localhost:32789/
     
     ex) docker exec -it 6832359260fd /bin/bash
 
-설치완료
++ 설치완료
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
 
@@ -114,7 +120,7 @@ http://localhost:32789/
 ### 4. AWS EC2 생성  
 
 ### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
-* codeDeploy agent 설치
+> CodeDeploy agent 설치
 
 EC2에 접속해서 다음 명령어를 입력합니다.
 
@@ -178,8 +184,8 @@ Github에 Webhook설정
 ![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
 
 ### 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
+> scripts/docker.sh
 ```
-#### scripts/docker.sh
 #!/bin/bash
 
 REPOSITORY=/home/ec2-user/app/step2
@@ -221,8 +227,9 @@ nohup java -jar \
         $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
 ```
+
+> appspec.yml
 ```
-#### appspce.yml
 version: 0.0  # codeDeploy의 버전, 프로젝트 버전이 아니므로 0.0 외에 다른 버전을 사용하면 오류발생
 os: linux
 files:     # s3에 업로드 된 파일이 ec2의 어느곳으로 이동시킬지 지정
@@ -243,7 +250,8 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
       runas: ec2-user
 ```
 ### 9. Github에 프로젝트 PUSH
-Github에 프로젝트 push후, jenkins로 webhook이 동작되고 신호를 받은 jenkins는 build 후 s3로 .jar, appspec.yml, deploy.sh 이 압축된 zip파일을 업로드합니다.  
+Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
+신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드합니다.  
 그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포합니다.
 
 ## [참고자료]
