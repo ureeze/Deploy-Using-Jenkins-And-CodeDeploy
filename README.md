@@ -124,13 +124,13 @@ IAM 역할 - CodeDeploy, EC2
 IAM 사용자 - Jenkins
 
 ### 7. Jenkins 작업설정
-![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)
 ```
 플러그인 설치
 • AWS CodeDeploy Plugin for Jenkins  
 • GitHub Integration Plugin  
 • Gradle Plugin
 ```
+![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)  
 ![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
 ![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
 ![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
@@ -138,7 +138,7 @@ IAM 사용자 - Jenkins
 ![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
 ![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)  
 (S3 액세스 키 ID, 비밀 액세스 키 입력)  
-![create project 6](https://user-images.githubusercontent.com/37195463/115069775-07519b00-9f2f-11eb-8905-0d28d6bbd2b7.png)  
+![create project 6](https://user-images.githubusercontent.com/37195463/115106461-fdb44b80-9f9f-11eb-8fa7-6db75887b087.png)  
 
 Github에 Webhook설정  
 ![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
