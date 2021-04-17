@@ -131,6 +131,8 @@ IAM 사용자 - Jenkins
 • Gradle Plugin
 ```
 ![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)  
+
+새 작업 생성
 ![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
 ![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
 ![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
