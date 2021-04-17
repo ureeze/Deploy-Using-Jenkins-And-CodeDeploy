@@ -69,15 +69,15 @@ docker 재실행
     exit
 ```
 
-젠킨스 이미지 받기
+* 젠킨스 이미지 받기
 
     sudo docker pull jenkins/jenkins:lts
     
-docker jenkins image 확인
+* docker jenkins image 확인
 
     docker images
     
-docker image를 컨테이너로 등록 후 실행
+* docker image를 컨테이너로 등록 후 실행
 
     docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root jenkins/jenkins:lts
     
@@ -87,13 +87,13 @@ docker image를 컨테이너로 등록 후 실행
     -u 실행할 사용자 지정
     –-name 컨테이너 이름 설정
 
-Jenkins [host ip:port]로 접속
+* Jenkins [host ip:port]로 접속
 ```
 http://localhost:32789/
 ```
 ![jenkins pw](https://user-images.githubusercontent.com/37195463/114923021-4caa9580-9e67-11eb-899a-c617425ff848.png)
 
-docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
+* docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 
     docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
     
@@ -155,15 +155,16 @@ install 파일로 설치를 진행합니다.
 - IAM 사용자 - Jenkins
 
 ### 7. Jenkins 작업설정
+* 플러그인 설치
 ```
-플러그인 설치
 • AWS CodeDeploy Plugin for Jenkins  
 • GitHub Integration Plugin  
 • Gradle Plugin
 ```
 ![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)  
 
-새 작업 생성
+* 새 작업 생성  
+
 ![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
 ![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
 ![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
