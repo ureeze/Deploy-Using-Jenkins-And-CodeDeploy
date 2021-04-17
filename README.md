@@ -109,19 +109,50 @@ docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 ![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
 
 ### 3. AWS S3 버킷 생성  
-*(액세스 키 ID, 비밀 액세스 키) 기억
+* (액세스 키 ID, 비밀 액세스 키) 기억
 
 ### 4. AWS EC2 생성  
 
 ### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
-codeDeploy agent 설치
-```
+* codeDeploy agent 설치
 
+EC2에 접속해서 다음 명령어를 입력합니다.
+
+    aws s3 cp 53://aws-codedeploy-ap-northeast-2/latest/install . --region ap-northeast-2
+    
+내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력됩니다.
+
+    download: 53://aws-codedeploy-ap-northeast-2/latest/install to ./install
+
+install 파일에 실행 권한이 없으니 실행 권한을 추가합니다.
+
+    chmod +X/install
+    
+install 파일로 설치를 진행합니다.
+
+    sudo ./install auto
+    
+설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사를 합니다.
+
+    sudo service codedeploy-agent status
+    
+다음과 같이 running 메시지가 출력되면 정상입니다.
+
+    The AWS CodeDeploy agent is running as PID XXX
+
+```
+만약 설치 중에 다음과 같은 에러가 발생한다면 루비라는 언어가 설치 안 된 상태라서 그렇습니다.
+
+    /usr/bin/env: ruby: No such file or directory
+    
+이럴 경우 yum install 로 루비를 설치하면 됩니다.
+
+    sudo yum install ruby
 ```
 
 ### 6. IAM 역할/사용자 생성
-IAM 역할 - CodeDeploy, EC2  
-IAM 사용자 - Jenkins
+- IAM 역할 - CodeDeploy, EC2  
+- IAM 사용자 - Jenkins
 
 ### 7. Jenkins 작업설정
 ```
