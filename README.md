@@ -127,39 +127,39 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
 > CodeDeploy agent 설치
 
-EC2에 접속해서 다음 명령어를 입력합니다.
+EC2에 접속해서 다음 명령어를 입력
 
     aws s3 cp 53://aws-codedeploy-ap-northeast-2/latest/install . --region ap-northeast-2
     
-내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력됩니다.
+내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력
 
     download: 53://aws-codedeploy-ap-northeast-2/latest/install to ./install
 
-install 파일에 실행 권한이 없으니 실행 권한을 추가합니다.
+install 파일에 실행 권한이 없으니 실행 권한을 추가
 
     chmod +X/install
     
-install 파일로 설치를 진행합니다.
+install 파일로 설치를 진행
 
     sudo ./install auto
     
-설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사를 합니다.
+설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사
 
     sudo service codedeploy-agent status
     
-다음과 같이 running 메시지가 출력되면 정상입니다.
+다음과 같이 running 메시지가 출력되면 정상
 
     The AWS CodeDeploy agent is running as PID XXX
 
-```
-만약 설치 중에 다음과 같은 에러가 발생한다면 루비라는 언어가 설치 안 된 상태라서 그렇습니다.
+ 
+> 만약 설치 중에 다음과 같은 에러가 발생한다면 루비라는 언어가 설치 안 된 상태이기 때문
 
     /usr/bin/env: ruby: No such file or directory
     
-이럴 경우 yum install 로 루비를 설치하면 됩니다.
+> 이럴 경우 yum install 로 루비를 설치
 
     sudo yum install ruby
-```
+ 
 
 ### 6. IAM 역할/사용자 생성
 - IAM 역할 - CodeDeploy, EC2  
@@ -190,10 +190,10 @@ install 파일로 설치를 진행합니다.
 Github에 Webhook설정  
 ![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
 
-다음으로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만들겠습니다.
+추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.
 
-이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행합니다.  
-만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되게 됩니다.
+이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
+만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
 + 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
 
 ![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/115113369-ea67a700-9fc4-11eb-9112-7028a8111af8.png)
@@ -270,8 +270,8 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
 ```
 ### 9. Github에 프로젝트 PUSH
 Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
-신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드합니다.  
-그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포합니다.
+신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드  
+그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포
 
 + build후 jenkins 결과 
 
