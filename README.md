@@ -2,8 +2,8 @@
 > AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 구축
 
 ## 주요내용
-> 실제 서비스 시에 새로운 코드의 변경사항이 정기적으로 빌드 및 테스트되어 공유 레포지토리에 통합되고 지속적인 배포가 되야 하기 때문에 CI/CD 환경구축  
-> Jenkins , AWS S3, AWS CodeDeploy 생성과 Spring Boot와의 연동으로 배포 자동화 구성
++ 실제 서비스 시에 새로운 코드의 변경사항이 정기적으로 빌드 및 테스트되어 공유 레포지토리에 통합되고 지속적인 배포가 되야 하기 때문에 CI/CD 환경구축
++ Jenkins , AWS S3, AWS CodeDeploy 생성과 Spring Boot와의 연동으로 배포 자동화 구성
 
 ![full](https://user-images.githubusercontent.com/37195463/115058438-39a7cc00-9f20-11eb-9ba5-9c9aef736909.png)
 
@@ -18,7 +18,7 @@
 2. Jenkins 설치
 3. AWS S3 버킷 생성
 4. AWS CodeDeploy 생성
-5. AWS EC2 인스턴스 생성(배포용)
+5. AWS EC2 인스턴스 생성 (배포용)
 6. IAM 역할/사용자 생성
 7. Jenkins 작업설정
 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
