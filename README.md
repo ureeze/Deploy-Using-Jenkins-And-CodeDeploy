@@ -1,5 +1,5 @@
-# 스프링부트 프로젝트의 CI/CD환경 구축
-> AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 구축
+# 스프링부트 프로젝트의 CI/CD 환경 구축
+> AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD 환경 구축
 
 ## 주요내용
 + 실제 서비스 시에 새로운 코드의 변경사항이 정기적으로 빌드 및 테스트되어 공유 레포지토리에 통합되고 지속적인 배포가 되야 하기 때문에 CI/CD 환경구축
