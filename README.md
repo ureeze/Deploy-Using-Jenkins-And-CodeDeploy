@@ -1,6 +1,6 @@
 # 스프링부트 프로젝트의 CI/CD환경 구축
+> AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 구축
 
-AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 구축
 ![full](https://user-images.githubusercontent.com/37195463/115058438-39a7cc00-9f20-11eb-9ba5-9c9aef736909.png)
 
 
@@ -22,21 +22,21 @@ AWS EC2 인스턴스에 Jenkins, AWS S3, CodeDeploy를 이용하여 CI/CD환경 
 ```
 ### Prerequisites / 선행 조건
 
-아래 사항들이 설치가 되어있어야합니다.
++ 아래 사항들이 설치가 되어있어야 한다.
 
 ```
 Run 가능한 스프링부트 
 ```
 
-## Installing / 설치
-### 1. 도커(Docker)  
+# Installing / 설치
+## 1. 도커(Docker)  
 + 컨테이너 기반의 오픈소스 가상화 플랫폼  
 
 ### 도커에서 의미하는 컨테이너  
 + 프로그램(소프트웨어)을 담는 격리된 공간을 의미. 각 컨테이너는 격리된 공간이기 한 컨테이너에 문제가 생기더라도 컨테이너 간에 영향을 끼치지 않는다.  
 
 ### 도커의 장점  
-+ 빠르고 가벼운 가상화 솔루션 - 호스트의 운영체제를 공유하여 필요한 최소한의 리소스만 할당받아 동작  
++ 빠르고 가벼운 가상화 솔루션 - 호스트의 운영체제를 공유하여 필요한 최소한의 리소스만 할당 받아 동작  
 + 개발언어에 종속되지 않는다.  
 + 뛰어난 보안성  
 
@@ -50,40 +50,45 @@ Run 가능한 스프링부트
 
 ![docker_install](https://user-images.githubusercontent.com/37195463/114914007-cb4e0580-9e5c-11eb-81fe-34990d7a6de6.png)  
 
-### 2. Jenkins 설치
-##### root 권한으로 진행  
->root가 아닌 현재유저를 도커그룹에 추가
+## 2. Jenkins 설치
+> root 권한으로 진행 : root가 아닌 현재유저를 도커그룹에 추가
 
  
-현재 유저 확인
+* 현재 유저 확인
+```
+Echo $USER
+```
 
-    Echo $USER
-  
-현재 유저 출력결과
+* 현재 유저 출력결과
+```
+ec2-user
+```
 
-    ec2-user
+* docker 그룹에 현재 유저 추가
+```
+sudo usermod -aG docker $USER 
+```
 
-docker 그룹에 현재 유저 추가
+* docker 재실행 
+```
+sudo service docker restart 
+```
 
-    sudo usermod -aG docker $USER 
-
-docker 재실행 
-
-    sudo service docker restart 
-
-그래도 적용이 안된경우 접속해제 후 재연결 
-
-    exit
- 
+* 그래도 적용이 안된경우 접속해제 후 재연결 
+```
+exit
+```
 
 * 젠킨스 이미지 받기
 ```
 sudo docker pull jenkins/jenkins:lts
-``` 
+```
+
 * docker jenkins image 확인
 ```
 docker images
-```  
+```
+
 * docker image를 컨테이너로 등록 후 실행
 ```
 docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root jenkins/jenkins:lts
@@ -119,40 +124,45 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
 
-### 3. AWS S3 버킷 생성  
+## 3. AWS S3 버킷 생성  
 * (액세스 키 ID, 비밀 액세스 키) 기억
 
-### 4. AWS EC2 생성  
+## 4. AWS EC2 생성  
 
-### 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
+## 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
 > CodeDeploy agent 설치
 
-EC2에 접속해서 다음 명령어를 입력
++ EC2에 접속해서 다음 명령어를 입력
+```
+aws s3 cp 53://aws-codedeploy-ap-northeast-2/latest/install . --region ap-northeast-2
+```
 
-    aws s3 cp 53://aws-codedeploy-ap-northeast-2/latest/install . --region ap-northeast-2
-    
-내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력
++ 내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력
+```
+download: 53://aws-codedeploy-ap-northeast-2/latest/install to ./install
+```
 
-    download: 53://aws-codedeploy-ap-northeast-2/latest/install to ./install
++ install 파일에 실행 권한이 없으니 실행 권한을 추가
+```
+chmod +X/install
+```
 
-install 파일에 실행 권한이 없으니 실행 권한을 추가
++ install 파일로 설치를 진행
+```
+sudo ./install auto
+```
 
-    chmod +X/install
-    
-install 파일로 설치를 진행
++ 설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사
+```
+sudo service codedeploy-agent status
+```
 
-    sudo ./install auto
-    
-설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사
-
-    sudo service codedeploy-agent status
-    
-다음과 같이 running 메시지가 출력되면 정상
-
-    The AWS CodeDeploy agent is running as PID XXX
-
++ 다음과 같이 running 메시지가 출력되면 정상
+```
+The AWS CodeDeploy agent is running as PID XXX
+```
  
-> 만약 설치 중에 다음과 같은 에러가 발생한다면 루비라는 언어가 설치 안 된 상태이기 때문
+> 만약 설치 중에 다음과 같은 에러가 발생한다면 Ruby라는 언어가 설치 안 된 상태이기 때문
 
     /usr/bin/env: ruby: No such file or directory
     
@@ -161,11 +171,11 @@ install 파일로 설치를 진행
     sudo yum install ruby
  
 
-### 6. IAM 역할/사용자 생성
+## 6. IAM 역할/사용자 생성
 - IAM 역할 - CodeDeploy, EC2  
 - IAM 사용자 - Jenkins
 
-### 7. Jenkins 작업설정
+## 7. Jenkins 작업설정
 * 플러그인 설치
 ```
 • AWS CodeDeploy Plugin for Jenkins  
@@ -184,16 +194,18 @@ install 파일로 설치를 진행
 ![create project 3](https://user-images.githubusercontent.com/37195463/115069211-37e50500-9f2e-11eb-8ee6-f4788dd06cfa.png)
 ![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
 ![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)  
-(S3 액세스 키 ID, 비밀 액세스 키 입력)  
++ (S3 액세스 키 ID, 비밀 액세스 키 입력)  
+
 ![create project 6](https://user-images.githubusercontent.com/37195463/115106461-fdb44b80-9f9f-11eb-8fa7-6db75887b087.png)  
 
-Github에 Webhook설정  
++ Github에 Webhook설정  
+
 ![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
 
-추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.
+> 추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
+> 이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
+> 만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
 
-이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
-만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
 + 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
 
 ![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/115113369-ea67a700-9fc4-11eb-9112-7028a8111af8.png)
@@ -202,7 +214,8 @@ Github에 Webhook설정
 + jenkins-build-deploy에 추가 적용  
   
 ![jenkins remove2](https://user-images.githubusercontent.com/37195463/115113501-ade87b00-9fc5-11eb-9993-feba9ad09ea1.png)
-### 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
+
+## 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
 > scripts/docker.sh
 ```
 #!/bin/bash
@@ -268,12 +281,13 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
       timeout: 60       # 60으로 스크립트 실행 60초 이상 수행되면 실패가 됩니다(무한정 기다릴 수 없으니 시간 제한을 둬야만 합니다).
       runas: ec2-user
 ```
-### 9. Github에 프로젝트 PUSH
-Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
-신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드  
-그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포
+## 9. Github에 프로젝트 PUSH
 
-+ build후 jenkins 결과 
+> Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
+> 신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드  
+> 그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포
+
++ build 후 jenkins 결과 
 
 ![jenkins build](https://user-images.githubusercontent.com/37195463/115113367-e9cf1080-9fc4-11eb-813d-8babd98c974a.png)
 
