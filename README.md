@@ -125,7 +125,7 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 + 설치완료
 
-![jenkins main](https://user-images.githubusercontent.com/37195463/135086142-3269fd99-7292-41c3-b858-dc5704f1f7a1.png)
+![jenkins main2](https://user-images.githubusercontent.com/37195463/135086640-596d0806-b805-495c-bfc4-9d63bea4d110.png)
 
 ## 3. AWS S3 버킷 생성  
 * (액세스 키 ID, 비밀 액세스 키) 기억
@@ -190,21 +190,21 @@ The AWS CodeDeploy agent is running as PID XXX
 
 > 새 작업 생성  
 
-![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
-![jenkins build deploy](https://user-images.githubusercontent.com/37195463/115113368-ea67a700-9fc4-11eb-9902-b79efa569997.png)
-![create project 1](https://user-images.githubusercontent.com/37195463/115069206-374c6e80-9f2e-11eb-87cc-d92c9f2a42a6.png)
-![jenkins build deploy](https://user-images.githubusercontent.com/37195463/115113368-ea67a700-9fc4-11eb-9902-b79efa569997.png)
-![create project 2](https://user-images.githubusercontent.com/37195463/115069207-37e50500-9f2e-11eb-80ef-14f5cfd8a05a.png)
-![create project 3](https://user-images.githubusercontent.com/37195463/115069211-37e50500-9f2e-11eb-8ee6-f4788dd06cfa.png)
-![create project 4](https://user-images.githubusercontent.com/37195463/115069213-387d9b80-9f2e-11eb-8cf0-eb7f8e705269.png)
-![create project 5](https://user-images.githubusercontent.com/37195463/115069216-387d9b80-9f2e-11eb-90b3-23a0fb17e512.png)  
+![jenkins main](https://user-images.githubusercontent.com/37195463/135087292-c6d1a308-7ca5-4e4d-b454-28996a9d4798.png)
+![jenkins build deploy](https://user-images.githubusercontent.com/37195463/135087284-9e2db8f3-1906-48f4-ad56-883919e2db40.png)
+![create project 1](https://user-images.githubusercontent.com/37195463/135087317-16511f05-e196-4080-9d1b-aa809f1fff30.png)
+![create project 2](https://user-images.githubusercontent.com/37195463/135087325-37ece8dd-a1e5-40f3-8ca6-62535f5ea7f7.png)
+![create project 3](https://user-images.githubusercontent.com/37195463/135087332-31268962-d778-44ed-a694-078c376e585f.png)
+![create project 4](https://user-images.githubusercontent.com/37195463/135087338-74f9f184-1ce9-4362-84e5-42950eeced0a.png)
+![create project 5](https://user-images.githubusercontent.com/37195463/135087344-76250f1a-6910-4899-8adf-289ff38842b6.png)
+ 
 + (S3 액세스 키 ID, 비밀 액세스 키 입력)  
 
-![create project 6](https://user-images.githubusercontent.com/37195463/115106461-fdb44b80-9f9f-11eb-8fa7-6db75887b087.png)  
+![create project 6](https://user-images.githubusercontent.com/37195463/135087269-1de84eed-c242-4ee1-961f-97d0c9bd69dd.png)
 
 + Github에 Webhook설정  
 
-![webhook](https://user-images.githubusercontent.com/37195463/115070406-daea4e80-9f2f-11eb-9729-87f639d7f526.png)
+![webhook](https://user-images.githubusercontent.com/37195463/135087549-365aba8a-af1b-4112-a37c-f6f6ae46c456.png)
 
 > 추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
 > 이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
@@ -212,12 +212,12 @@ The AWS CodeDeploy agent is running as PID XXX
 
 + 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
 
-![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/115113369-ea67a700-9fc4-11eb-9112-7028a8111af8.png)
-![jenkins remove1](https://user-images.githubusercontent.com/37195463/115113502-ae811180-9fc5-11eb-8842-b2efc483c2bc.png)
+![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/135087648-299dd52e-5cb9-45d6-99ab-d11e55dac432.png)
+![jenkins remove1](https://user-images.githubusercontent.com/37195463/135087644-fe9e0ce5-aaaf-4090-80b7-0de155a89d63.png)
 
 + jenkins-build-deploy에 추가 적용  
   
-![jenkins remove2](https://user-images.githubusercontent.com/37195463/115113501-ade87b00-9fc5-11eb-9993-feba9ad09ea1.png)
+![jenkins remove2](https://user-images.githubusercontent.com/37195463/135087836-5a101d48-c85a-4ad4-a58b-da31ff002564.png)
 
 ## 8. 프로젝트내부에 deploy.sh , appspce.yml 생성
 > scripts/docker.sh
@@ -293,15 +293,15 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
 
 + build 후 jenkins 결과 
 
-![jenkins build](https://user-images.githubusercontent.com/37195463/115113367-e9cf1080-9fc4-11eb-813d-8babd98c974a.png)
+![jenkins build](https://user-images.githubusercontent.com/37195463/135087914-5847cbb8-25de-4d98-b1fb-9bc13c64bb3c.png)
 
 + s3에 file 업로드 됨
 
-![s3 file](https://user-images.githubusercontent.com/37195463/115113366-e9367a00-9fc4-11eb-99b6-1fcc81bc5aa5.png)
+![s3 file](https://user-images.githubusercontent.com/37195463/135087916-b100f512-35c8-4d53-90eb-a10e75286c7a.png)
 
 + codeDeploy 배포 상태
 
-![codedeploy status](https://user-images.githubusercontent.com/37195463/115113364-e89de380-9fc4-11eb-8728-56f7b457214f.png)
+![codedeploy status](https://user-images.githubusercontent.com/37195463/135087911-cdb11828-ce82-4058-ba26-6346233ee141.png)
 
 ## [참고자료]
 <https://goddaehee.tistory.com/252?category=399168>  
