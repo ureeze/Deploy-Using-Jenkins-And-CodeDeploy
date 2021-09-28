@@ -5,7 +5,7 @@
 + 실제 서비스 시에 새로운 코드의 변경사항이 정기적으로 빌드 및 테스트되어 공유 레포지토리에 통합되고 지속적인 배포가 되야 하기 때문에 CI/CD 환경구축
 + Jenkins , AWS S3, AWS CodeDeploy 생성과 Spring Boot와의 연동으로 배포 자동화 구성
 
-![full](https://user-images.githubusercontent.com/37195463/115058438-39a7cc00-9f20-11eb-9ba5-9c9aef736909.png)
+![full](https://user-images.githubusercontent.com/37195463/135084243-93a66d6d-bad0-4f8b-b8ee-1e961a46fc76.png)
 
 
 ## CI/CD 란?
@@ -47,12 +47,11 @@ Run 가능한 스프링부트
 ### 도커 설치 (로컬환경)
 + Windows10 도커설치 (<https://hub.docker.com/editions/community/docker-ce-desktop-windows/>)
 
-![docker_install01](https://user-images.githubusercontent.com/37195463/114920019-f38d3280-9e63-11eb-8086-86a985b4564a.png)  
-
+![docker_install01](https://user-images.githubusercontent.com/37195463/135085906-5cd43d54-e164-4e01-bfbe-8b54cacd1d94.png)
 
 + CMD 에서 "docker -v" 로 도커가 설치되었는지 확인.  
 
-![docker_install](https://user-images.githubusercontent.com/37195463/114914007-cb4e0580-9e5c-11eb-81fe-34990d7a6de6.png)  
+![docker_install](https://user-images.githubusercontent.com/37195463/135085940-f576dfed-247c-4978-a257-09d7659c0b9d.png)
 
 ## 2. Jenkins 설치
 > root 권한으로 진행 : root가 아닌 현재유저를 도커그룹에 추가
@@ -110,7 +109,7 @@ http://localhost:32789/
 
 * Administrator password 입력
 
-![jenkins pw](https://user-images.githubusercontent.com/37195463/114923021-4caa9580-9e67-11eb-899a-c617425ff848.png)
+![jenkins pw](https://user-images.githubusercontent.com/37195463/135086092-cb58b74e-576b-42a1-a326-6f6ee6946898.png)
 
 * docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 ```
@@ -126,7 +125,7 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 + 설치완료
 
-![jenkins main](https://user-images.githubusercontent.com/37195463/114923041-5207e000-9e67-11eb-900b-b67b64befeda.png)
+![jenkins main](https://user-images.githubusercontent.com/37195463/135086142-3269fd99-7292-41c3-b858-dc5704f1f7a1.png)
 
 ## 3. AWS S3 버킷 생성  
 * (액세스 키 ID, 비밀 액세스 키) 기억
@@ -180,15 +179,16 @@ The AWS CodeDeploy agent is running as PID XXX
 - IAM 사용자 - Jenkins
 
 ## 7. Jenkins 작업설정
-* 플러그인 설치
+> 플러그인 설치
 ```
 • AWS CodeDeploy Plugin for Jenkins  
 • GitHub Integration Plugin  
 • Gradle Plugin
 ```
-![jenkins plugin](https://user-images.githubusercontent.com/37195463/115068723-9362c300-9f2d-11eb-9ffc-ba9606373df7.png)  
+> 플러그인 관리
+![jenkins plugin](https://user-images.githubusercontent.com/37195463/135086204-b76572ff-ebad-49b1-a4b4-ca4af7faa9e9.png)
 
-* 새 작업 생성  
+> 새 작업 생성  
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/115068718-92319600-9f2d-11eb-9023-bb75b87c3bae.png)
 ![jenkins build deploy](https://user-images.githubusercontent.com/37195463/115113368-ea67a700-9fc4-11eb-9902-b79efa569997.png)
