@@ -242,9 +242,9 @@ pwd
 ![webhook](https://user-images.githubusercontent.com/37195463/135087549-365aba8a-af1b-4112-a37c-f6f6ae46c456.png)
 
 ```
-추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
-이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
-만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
++ 추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
++ job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행.  
++ 만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생.
 ```
 
 > 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
