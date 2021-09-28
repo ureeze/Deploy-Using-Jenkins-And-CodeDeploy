@@ -54,45 +54,45 @@ Run 가능한 스프링부트
 ![docker_install](https://user-images.githubusercontent.com/37195463/135085940-f576dfed-247c-4978-a257-09d7659c0b9d.png)
 
 ## 2. Jenkins 설치
-> root 권한으로 진행 : root가 아닌 현재유저를 도커그룹에 추가
++ root 권한으로 진행 : root가 아닌 현재유저를 도커그룹에 추가
 
  
-* 현재 유저 확인
+> 현재 유저 확인
 ```
 Echo $USER
 ```
 
-* 현재 유저 출력결과
+> 현재 유저 출력결과
 ```
 ec2-user
 ```
 
-* docker 그룹에 현재 유저 추가
+> docker 그룹에 현재 유저 추가
 ```
 sudo usermod -aG docker $USER 
 ```
 
-* docker 재실행 
+> docker 재실행 
 ```
 sudo service docker restart 
 ```
 
-* 그래도 적용이 안된경우 접속해제 후 재연결 
+> 그래도 적용이 안된경우 접속해제 후 재연결 
 ```
 exit
 ```
 
-* 젠킨스 이미지 받기
+> 젠킨스 이미지 받기
 ```
 sudo docker pull jenkins/jenkins:lts
 ```
 
-* docker jenkins image 확인
+> docker jenkins image 확인
 ```
 docker images
 ```
 
-* docker image를 컨테이너로 등록 후 실행
+> docker image를 컨테이너로 등록 후 실행
 ```
 docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root jenkins/jenkins:lts
   
@@ -102,16 +102,16 @@ docker run -d -p 32789:8080 -v /jenkins:/var/jenkins_home --name jenkins -u root
 -u 실행할 사용자 지정
 –-name 컨테이너 이름 설정
 ```
-* Jenkins [host ip:port]로 접속
+> Jenkins [host ip:port]로 접속
 ```
 http://localhost:32789/
 ```
 
-* Administrator password 입력
+> Administrator password 입력
 
 ![jenkins pw](https://user-images.githubusercontent.com/37195463/135086092-cb58b74e-576b-42a1-a326-6f6ee6946898.png)
 
-* docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
+> docker의 jenkins 컨테이너로 접속하여 패스워드 파일 읽기
 ```
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
