@@ -123,7 +123,7 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
     
     ex) docker exec -it 6832359260fd /bin/bash
 
-+ 설치완료
+> 설치완료
 
 ![jenkins main2](https://user-images.githubusercontent.com/37195463/135086640-596d0806-b805-495c-bfc4-9d63bea4d110.png)
 
@@ -132,35 +132,35 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 ## 4. AWS EC2 생성  
 
-## 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성 )  
-> CodeDeploy agent 설치
+## 5. AWS CodeDeploy 생성 (배포그룹생성, EC2태그, 배포구성)  
++ CodeDeploy agent 설치
 
-+ EC2에 접속해서 다음 명령어를 입력
+> EC2에 접속해서 다음 명령어를 입력
 ```
 aws s3 cp 53://aws-codedeploy-ap-northeast-2/latest/install . --region ap-northeast-2
 ```
 
-+ 내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력
+> 내려받기가 성공했다면 다음과 같은 메시지가 콘솔에 출력
 ```
 download: 53://aws-codedeploy-ap-northeast-2/latest/install to ./install
 ```
 
-+ install 파일에 실행 권한이 없으니 실행 권한을 추가
+> install 파일에 실행 권한이 없으니 실행 권한을 추가
 ```
 chmod +X/install
 ```
 
-+ install 파일로 설치를 진행
+> install 파일로 설치를 진행
 ```
 sudo ./install auto
 ```
 
-+ 설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사
+> 설치가 끝났으면 Agent가 정상적으로 실행되고 있는지 상태 검사
 ```
 sudo service codedeploy-agent status
 ```
 
-+ 다음과 같이 running 메시지가 출력되면 정상
+> 다음과 같이 running 메시지가 출력되면 정상
 ```
 The AWS CodeDeploy agent is running as PID XXX
 ```
@@ -186,16 +186,47 @@ The AWS CodeDeploy agent is running as PID XXX
 • Gradle Plugin
 ```
 > 플러그인 관리
+
 ![jenkins plugin](https://user-images.githubusercontent.com/37195463/135086204-b76572ff-ebad-49b1-a4b4-ca4af7faa9e9.png)
 
 > 새 작업 생성  
 
 ![jenkins main](https://user-images.githubusercontent.com/37195463/135087292-c6d1a308-7ca5-4e4d-b454-28996a9d4798.png)
+
+> 프로젝트 이름 입력 후 확인
+
 ![jenkins build deploy](https://user-images.githubusercontent.com/37195463/135087284-9e2db8f3-1906-48f4-ad56-883919e2db40.png)
+
+> GitHub project 선택  
+> Project url 입력 (ex : https//github.com/ureeze/(Repository 이름) )
+
 ![create project 1](https://user-images.githubusercontent.com/37195463/135087317-16511f05-e196-4080-9d1b-aa809f1fff30.png)
+
+> 소스 코드 관리 : Git 선택  
+> Repository URL 입력 (ex : https//github.com/ureeze/(Repository 이름).git 
+
 ![create project 2](https://user-images.githubusercontent.com/37195463/135087325-37ece8dd-a1e5-40f3-8ca6-62535f5ea7f7.png)
+
+> 빌드 유발 : GitHub hook trigger for GITScm polling 선택
+
 ![create project 3](https://user-images.githubusercontent.com/37195463/135087332-31268962-d778-44ed-a694-078c376e585f.png)
+
+> Build  
+>> Execute shell/Command  
+>>> chmod +x gradlew  
+>>> ./gradlew clean build
+
+>> Execute shell/Command  
+>>> mkdir -p before-deploy  
+>>> cp scripts/*.sh before-deploy/  
+>>> cp appspec.yml before-deploy/  
+>>> cp build/libs/*.jar before-deploy/  
+>>> pwd
+
 ![create project 4](https://user-images.githubusercontent.com/37195463/135087338-74f9f184-1ce9-4362-84e5-42950eeced0a.png)
+
+> 빌드 후 조치 입력
+
 ![create project 5](https://user-images.githubusercontent.com/37195463/135087344-76250f1a-6910-4899-8adf-289ff38842b6.png)
  
 + (S3 액세스 키 ID, 비밀 액세스 키 입력)  
