@@ -219,8 +219,8 @@ chmod +x gradlew
 ```
 
 >> Execute shell/Command  
->>> mkdir -p before-deploy  
 ```
+mkdir -p before-deploy  
 cp scripts/*.sh before-deploy/  
 cp appspec.yml before-deploy/  
 cp build/libs/*.jar before-deploy/  
@@ -233,24 +233,35 @@ pwd
 
 ![create project 5](https://user-images.githubusercontent.com/37195463/135087344-76250f1a-6910-4899-8adf-289ff38842b6.png)
  
-+ (S3 액세스 키 ID, 비밀 액세스 키 입력)  
+> Use Access/Secret keys 선택 후 S3 액세스 키 ID, 비밀 액세스 키 입력
 
 ![create project 6](https://user-images.githubusercontent.com/37195463/135087269-1de84eed-c242-4ee1-961f-97d0c9bd69dd.png)
 
-+ Github에 Webhook설정  
+> Github에 Webhook설정  
 
 ![webhook](https://user-images.githubusercontent.com/37195463/135087549-365aba8a-af1b-4112-a37c-f6f6ae46c456.png)
 
-> 추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
-> 이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
-> 만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
+```
+추가로 하나의 job을 더 생성하고, 위에서 생성한 job이 수행된 후 연속적으로 실행되도록 만든다.  
+이 job은 앞서 생성한 before-deploy directory를 remove하는 작업을 수행  
+만약 remove 하지 않으면, 계속해서 build 후의 파일들이 deploy directory에 쌓이게 되어 이전 version의 file들이 s3 bucket으로 함께 upload 되는 문제가 발생
+```
 
-+ 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
+> 앞서 생성한 before-deploy directory를 remove하기 위한 새 작업 생성  
 
 ![jenkins deploydir remove](https://user-images.githubusercontent.com/37195463/135087648-299dd52e-5cb9-45d6-99ab-d11e55dac432.png)
+
+> before-deploy directory를 remove 하기 위해 작성
+ 
+> Build  
+>> Execute shell/Command  
+```
+rm -rf /var/jenkins_home/workspace/jenkins-build-deploy/before-deploy/
+```
+
 ![jenkins remove1](https://user-images.githubusercontent.com/37195463/135087644-fe9e0ce5-aaaf-4090-80b7-0de155a89d63.png)
 
-+ jenkins-build-deploy에 추가 적용  
+> jenkins-build-deploy에 추가 적용  
   
 ![jenkins remove2](https://user-images.githubusercontent.com/37195463/135087836-5a101d48-c85a-4ad4-a58b-da31ff002564.png)
 
@@ -322,25 +333,25 @@ hooks:      # CodeDeploy 배포 단계에서 실행할 명령어를 지정합니
 ```
 ## 9. Github에 프로젝트 PUSH
 
-> Github에 프로젝트 push 후, jenkins로 webhook이 동작되고  
-> 신호를 받은 jenkins는 build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드  
-> 그 후 CodeDloy는 jenkins의 신호를 받아 s3의 파일을 ec2에 배포
++ Github에 프로젝트 Push 후, Jenkins로 webhook이 동작되고  
++ 신호를 받은 Jenkins는 Build 후 s3로 (.jar, appspec.yml, deploy.sh) 이 압축된 zip파일을 업로드  
++ 그 후 CodeDloy는 Jenkins의 신호를 받아 s3의 파일을 ec2에 배포
 
-+ build 후 jenkins 결과 
+> Build 후 Jenkins 결과 
 
 ![jenkins build](https://user-images.githubusercontent.com/37195463/135087914-5847cbb8-25de-4d98-b1fb-9bc13c64bb3c.png)
 
-+ s3에 file 업로드 됨
+> S3에 File 업로드 됨
 
 ![s3 file](https://user-images.githubusercontent.com/37195463/135087916-b100f512-35c8-4d53-90eb-a10e75286c7a.png)
 
-+ codeDeploy 배포 상태
+> CodeDeploy 배포 상태
 
 ![codedeploy status](https://user-images.githubusercontent.com/37195463/135087911-cdb11828-ce82-4058-ba26-6346233ee141.png)
 
 ## [참고자료]
-<https://goddaehee.tistory.com/252?category=399168>  
-<https://jojoldu.tistory.com/441>  
-<https://dbjh.tistory.com/71?category=739428>  
-참고서적 : 스프링 부트와 AWS로 혼자 구현하는 웹 서비스  
++ <https://goddaehee.tistory.com/252?category=399168>  
++ <https://jojoldu.tistory.com/441>  
++ <https://dbjh.tistory.com/71?category=739428>  
++ 참고서적 : 스프링 부트와 AWS로 혼자 구현하는 웹 서비스  
 ![book](https://user-images.githubusercontent.com/37195463/115071457-3ec14700-9f31-11eb-910a-d9ad9261e76f.png)
