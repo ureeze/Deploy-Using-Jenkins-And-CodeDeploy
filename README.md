@@ -198,12 +198,12 @@ The AWS CodeDeploy agent is running as PID XXX
 ![jenkins build deploy](https://user-images.githubusercontent.com/37195463/135087284-9e2db8f3-1906-48f4-ad56-883919e2db40.png)
 
 > GitHub project 선택  
-> Project url 입력 (ex : https//github.com/ureeze/(Repository 이름) )
+> Project url 입력 (https//github.com/ureeze/(Repository 이름) )
 
 ![create project 1](https://user-images.githubusercontent.com/37195463/135087317-16511f05-e196-4080-9d1b-aa809f1fff30.png)
 
 > 소스 코드 관리 : Git 선택  
-> Repository URL 입력 (ex : https//github.com/ureeze/(Repository 이름).git 
+> Repository URL 입력 (https//github.com/ureeze/(Repository 이름).git 
 
 ![create project 2](https://user-images.githubusercontent.com/37195463/135087325-37ece8dd-a1e5-40f3-8ca6-62535f5ea7f7.png)
 
@@ -213,15 +213,19 @@ The AWS CodeDeploy agent is running as PID XXX
 
 > Build  
 >> Execute shell/Command  
->>> chmod +x gradlew  
->>> ./gradlew clean build
+```
+chmod +x gradlew  
+./gradlew clean build
+```
 
 >> Execute shell/Command  
 >>> mkdir -p before-deploy  
->>> cp scripts/*.sh before-deploy/  
->>> cp appspec.yml before-deploy/  
->>> cp build/libs/*.jar before-deploy/  
->>> pwd
+```
+cp scripts/*.sh before-deploy/  
+cp appspec.yml before-deploy/  
+cp build/libs/*.jar before-deploy/  
+pwd
+```
 
 ![create project 4](https://user-images.githubusercontent.com/37195463/135087338-74f9f184-1ce9-4362-84e5-42950eeced0a.png)
 
